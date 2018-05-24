@@ -29,6 +29,25 @@
       }
     ]
   },
+   "linux": { 
+    "target": "deb", 
+    "category": "AudioVideo;Video", 
+    "desktop": { 
+      "MimeType": "x-scheme-handler/lbry", 
+      "Exec": "/opt/LBRY/lbry %U" 
+    } 
+  }, 
+  "deb": { 
+    "depends": [ 
+      "gconf2", 
+      "gconf-service", 
+      "libnotify4", 
+      "libappindicator1", 
+      "libxtst6", 
+      "libnss3", 
+      "libsecret-1-0" 
+    ] 
+  }, 
   "artifactName": "${productName}_${version}.${ext}",
   "beforeBuild": "./build/checkDaemonPlatform.js"
 }
