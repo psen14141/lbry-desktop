@@ -1,99 +1,105 @@
-.nav {
-  min-width: var(--side-nav-width);
-  background-color: var(--nav-bg-color);
-  padding: $spacing-width * 1/3;
-  color: var(--nav-color);
+.navigation {
+  background-color: $white;
+  border-right: 1px solid $silver;
+  padding-top: 24px;
+  position: relative;
+  width: 200px;
 
-  hr {
-    width: 24px;
-    margin: 36px 0;
-    border: solid 1px var(--color-divider);
-    margin: $spacing-vertical $spacing-vertical * 2/3;
-  }
+  &::before {
+    top: 0; left: 0;
+    bottom: 0; right: 0;
 
-  @media (min-width: $medium-breakpoint) {
-    padding-left: $spacing-width;
-    width: calc(var(--side-nav-width) * 1.4);
-  }
-
-  @media (min-width: $large-breakpoint) {
-    width: calc(var(--side-nav-width) * 1.6);
+    background-image: linear-gradient(to right, transparent, #eaeef5 100%);
+    content: "";
+    position: absolute;
+    z-index: 0;
   }
 }
 
-// Sidebar links
-.nav__primary {
-  padding-top: 80px;
+.navigation__links {
+  position: relative;
 }
 
-.nav__link {
-  // padding-top: $spacing-vertical / 3;
-  color: inherit;
+.navigation__link {
+  display: block;
+  font-size: 0.85rem;
+  line-height: 1.75;
+  padding-left: 1rem;
+  position: relative;
+  transition: color 0.2s;
   white-space: nowrap;
 
-  .btn__label {
-    margin-left: $spacing-vertical * 1/3;
+  &::before {
+    top: 0; left: 0;
+
+    background-color: $teal;
+    content: "";
+    height: 100%; max-height: 1.5rem;
+    position: absolute;
+    transition: width 0.2s;
   }
 
-  .btn {
-    font: normal 400 16px/36px 'metropolis-semibold';
+  &:not(.active) {
+    color: $gray;
 
-    @media only screen and (min-width: $medium-breakpoint) {
-      font: normal 400 18px/40px 'metropolis-semibold';
-    }
-
-    @media only screen and (min-width: $large-breakpoint) {
-      font: normal 400 21px/50px 'metropolis-semibold';
+    &::before {
+      width: 0;
     }
   }
 
-  .btn:hover {
-    color: var(--text-color);
+  &:not(.title) {
+    &:hover,
+    &.active {
+      color: $black;
+
+      &::before {
+        width: 3px;
+      }
+    }
+  }
+
+  &.title {
+    margin-bottom: 0.25rem; padding-top: 1rem;
+
+    color: $gray;
+    cursor: default;
+    font-size: inherit;
+    font-weight: 700;
+    letter-spacing: 0.1rem;
+    opacity: 0.3;
+    text-transform: uppercase;
   }
 }
 
-.nav__link--sub {
-  margin-left: 5px;
-  padding-left: $spacing-vertical * 2/3;
+.navigation__link__items {
+  padding-left: 1rem;
+}
 
-  .btn {
-    font: normal 400 14px/30px 'metropolis-medium';
+.navigation__link__item {
+  position: relative;
 
-    @media only screen and (min-width: $medium-breakpoint) {
-      font: normal 400 15px/30px 'metropolis-semibold';
-    }
+  &::before {
+    width: 0.25rem; height: 0.25rem;
+    top: 0.55rem; left: -0.7rem;
 
-    @media only screen and (min-width: $large-breakpoint) {
-      font: normal 400 18px/40px 'metropolis-medium';
+    border-radius: 50%;
+    content: "";
+    position: absolute;
+    transition: background-color 0.2s;
+  }
+
+  &:not(.active) {
+    color: $gray;
+
+    &::before {
+      background-color: transparent;
     }
   }
-}
 
-.nav__link--active {
-  color: var(--text-color);
-}
-
-.nav__sub-links {
-  color: var(--nav-color);
-  padding-bottom: $spacing-vertical * 1/3;
-}
-
-// Sub links animations
-// The -appear, -leave classes are added by 'react-transition-group'
-.nav__sub-appear,
-.nav__sub-leave {
-  max-height: 0;
-  opacity: 0;
-}
-
-.nav__sub-appear.nav__sub-appear-active {
-  // using max-height is a hack to animate to height "auto"
-  // Needs to be some arbitrarily large height
-  max-height: 500px;
-  opacity: 1;
-  transition: all var(--animation-duration) var(--animation-style);
-}
-
-.nav__sub {
-  padding-top: 5px;
+  &:hover,
+  &.active {
+    &::before {
+      background-color: $black;
+    }
+  }
 }

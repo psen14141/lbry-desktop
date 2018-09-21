@@ -12,10 +12,10 @@ class CardMedia extends React.PureComponent<Props> {
 
     return (
       <div
-        style={thumbnail ? { backgroundImage: `url('${thumbnail}')` } : {}}
         className={classnames('card__media', {
           'card__media--no-img': !thumbnail,
         })}
+        style={thumbnail ? { backgroundImage: `url('${thumbnail}')` } : {}}
       >
         {!thumbnail && <span className="card__media-text">LBRY</span>}
       </div>

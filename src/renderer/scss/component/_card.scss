@@ -1,57 +1,286 @@
-.card {
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: var(--card-radius);
-  user-select: text;
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  max-width: var(--card-max-width);
-}
-
-.card > h1 {
-  word-wrap: break-word;
-}
-
-.card--section {
-  background-color: var(--card-bg);
-  padding: $spacing-vertical;
-  margin-top: $spacing-vertical * 2/3;
-  box-shadow: var(--box-shadow-layer);
-}
-
-.card--small {
-  white-space: normal;
-
-  .card__media {
-    padding-top: var(--video-aspect-ratio);
+.cards {
+  &.list {
   }
 
-  .card__media-text {
-    // for the weird padding required for dynamic height
-    // this lets the text sit in the middle instead of the bottom
-    margin-top: calc(var(--video-aspect-ratio) * -1);
-  }
 
-  .channel-name {
-    font-size: 12px;
 
-    @media only screen and (min-width: $medium-breakpoint) {
-      font-size: 14px;
+  // `.card.row` is used on the discover page
+  // It is a list of cards that extend past the right edge of the screen
+  // There are arrows to horizontally scroll the cards and view hidden content
+
+  &.row {
+    padding-top: $spacing-vertical;
+    white-space: nowrap;
+    width: 100%;
+
+    &:first-of-type {
+      background-color: $black;
+      color: $white;
+      padding-bottom: $spacing-vertical;
+
+      .card-row__header {
+        font-weight: 700;
+      }
+    }
+
+    &:last-of-type {
+      padding-bottom: $spacing-vertical * 2/3;
+    }
+
+    .cards__header {
+      flex-direction: row;
+      // specific padding-left styling is needed here
+      // this needs to be used on a page with noPadding
+      // doing so allows the content to scroll to the edge of the screen
+      padding-left: $spacing-width;
     }
   }
 }
 
-.card--link {
-  cursor: pointer;
+
+
+.cards__header {
+  display: flex;
+  justify-content: space-between;
 }
 
-.card--pending {
-  opacity: 0.5;
+.cards__header__title {
+  align-items: center;
+  cursor: default;
+  display: flex;
+  font-size: 18px;
+  line-height: 24px;
+
+  @media only screen and (min-width: $medium-breakpoint) {
+    // font-size: 20px;
+  }
+}
+
+.cards__header__navigation {
+  display: flex;
+  padding-right: 1rem; // $spacing-width * 1/3;
+
+  @media (min-width: $medium-breakpoint) {
+    // padding-right: $spacing-width;
+  }
+
+  .left,
+  .right {
+    color: var(--text-color);
+    width: var(--btn-arrow-width);
+
+    &:disabled {
+      opacity: 0.3;
+    }
+  }
+}
+
+
+
+.cards__scrollhouse {
+  overflow: hidden;
+  padding-top: $spacing-vertical * 2/3;
+
+  .card {
+    display: inline-block;
+    overflow-y: visible;
+    vertical-align: top;
+    width: calc((100% / 4) - 34px); // 31 px to handle to padding between cards
+
+    &:not(:first-of-type) {
+      margin-left: 20px;
+    }
+
+    &:first-of-type {
+      margin-left: $spacing-width;
+    }
+
+    &:last-of-type {
+      margin-right: $spacing-width;
+    }
+
+    @media only screen and (min-width: $medium-breakpoint) {
+      // width: calc((100% / 6) - 29px);
+    }
+
+    @media only screen and (min-width: $large-breakpoint) {
+      // width: calc((100% / 8) - 27px);
+    }
+  }
+}
+
+
+
+.card {
+  border-radius: var(--card-radius);
+  // display: flex;
+  flex-direction: column;
+  // margin-left: auto;
+  margin-right: auto;
+  max-width: var(--card-max-width);
+  position: relative;
+  user-select: text;
+
+  > h1 {
+    word-wrap: break-word;
+  }
+
+  &.link {
+    cursor: pointer;
+  }
+
+  &.pending {
+    opacity: 0.5;
+  }
+
+  &.small {
+    white-space: normal;
+
+    .card__media {
+      padding-top: var(--video-aspect-ratio);
+    }
+
+    .card-media__internal-links {
+      top: $spacing-vertical * 1/3; right: $spacing-vertical * 1/3;
+    }
+
+    .card__media-text {
+      font-size: 3rem;
+
+      // for the weird padding required for dynamic height
+      // this lets the text sit in the middle instead of the bottom
+      margin-top: calc(var(--video-aspect-ratio) * -1);
+    }
+
+    .channel-name {
+      font-size: 12px;
+
+      @media only screen and (min-width: $medium-breakpoint) {
+        // font-size: 14px;
+      }
+    }
+  }
+
+  // .card-media__internal__links should always be inside a card
+  .card-media__internal-links {
+    top: $spacing-vertical * 2/3; right: $spacing-vertical * 2/3;
+    position: absolute;
+  }
+}
+
+
+
+.card__meta {
+  // color: var(--text-color); // var(--color-help);
+  // font-family: "metropolis-medium";
+  // font-size: 14px;
+  font-size: 18px;
+  padding-top: $spacing-vertical * 2/3;
+
+  &.file {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 5px;
+  }
+
+  &.identity {
+    // color: var(--text-color);
+  }
+
+  &.identity--file {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    .icon {
+      margin: 0 $spacing-vertical * 1/3;
+    }
+  }
+
+  &.identity-icons {
+    align-items: center;
+    align-self: flex-start;
+    display: flex;
+  }
+}
+
+.card__meta__properties {
+  align-items: center;
+  color: var(--card-text-color);
+  display: flex;
+  padding-top: $spacing-vertical * 1/3;
+
+  > *:not(:last-child) {
+    margin-right: $spacing-vertical * 1/3;
+  }
+}
+
+.card__meta__subtitle {
+  color: var(--card-text-color);
+  font-size: 14px;
+  // font-family: "metropolis-medium";
+  // margin: 0;
+
+  &.large {
+    font-size: 18px;
+    padding-bottom: $spacing-vertical * 1/3;
+  }
+
+  &.price {
+    padding-top: $spacing-vertical * 1/3;
+  }
+
+  &.x-small {
+    font-size: 12px;
+  }
+}
+
+.card__meta__title {
+  &.file-card {
+    // height is the same height that two lines of title fill
+    // doing this so content below the title is inline accross the row
+    height: 30px;
+    padding-top: $spacing-vertical * 1/3;
+
+    @media only screen and (min-width: $medium-breakpoint) {
+      // height: 36px;
+    }
+  }
+
+  &.large {
+    font-size: 22px;
+  }
+
+  &.small {
+    font-size: 12px;
+    line-height: 12px;
+
+    @media only screen and (min-width: $medium-breakpoint) {
+      // font-size: 14px;
+      // line-height: 14px;
+    }
+  }
+
+  &.x-small {
+    font-size: 12px;
+    line-height: 12px;
+  }
+}
+
+
+
+.card--section {
+  margin-top: $spacing-vertical * 2/3;
+  padding: $spacing-vertical;
+
+  background-color: var(--card-bg);
+  box-shadow: var(--box-shadow-layer);
 }
 
 .card--wallet-balance {
-  background: url('../../../static/img/stripe-background.png') no-repeat;
+  background: url("../../../static/img/stripe-background.png") no-repeat;
   background-size: cover;
   color: var(--card-wallet-color);
   justify-content: space-between;
@@ -68,159 +297,47 @@
 }
 
 .card__media {
-  background-size: cover;
+  background-color: $silver;
+  background-image: linear-gradient(to right, $teal, $cyan 100%);
+  background-position: center;
   background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-color: var(--color-placeholder);
+  background-size: cover;
 }
 
 .card__media--no-img {
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
   position: relative;
 }
 
 .card__media--nsfw {
-  background-color: var(--color-error);
+  background-color: $fuchsia;
 }
 
-.card__title-identity {
-  color: var(--text-color);
-}
 
-.card__title-identity--file {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  .icon {
-    margin: 0 $spacing-vertical * 1/3;
-  }
-}
-
-.card__title-identity-icons {
-  display: flex;
-  align-items: center;
-  align-self: flex-start;
-}
-
-.card__title {
-  font-size: 18px;
-  color: var(--text-color);
-}
-
-.card__title--small {
-  font-size: 12px;
-  line-height: 12px;
-
-  @media only screen and (min-width: $medium-breakpoint) {
-    font-size: 14px;
-    line-height: 14px;
-  }
-}
-
-.card__title--x-small {
-  font-size: 12px;
-  line-height: 12px;
-}
-
-.card__title--large {
-  font-size: 22px;
-}
-
-.card__title--file {
-  font-family: 'metropolis-bold';
-  font-size: 28px;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 5px;
-  font-size: 18px;
-}
-
-.card__title--file-card {
-  padding-top: $spacing-vertical * 1/3;
-  // height is the same height that two lines of title fill
-  // doing this so content below the title is inline accross the row
-  height: 30px;
-
-  @media only screen and (min-width: $medium-breakpoint) {
-    height: 36px;
-  }
-}
-
-.card__subtitle {
-  margin: 0;
-  font-size: 14px;
-  font-family: 'metropolis-medium';
-  color: var(--card-text-color);
-}
-
-.card__subtitle--x-small {
-  font-size: 12px;
-}
-
-.card__subtitle--large {
-  font-size: 18px;
-  padding-bottom: $spacing-vertical * 1/3;
-}
-
-.card__subtitle-price {
-  padding-top: $spacing-vertical * 1/3;
-}
 
 .card__title--small + .card__subtitle,
 .card__title--x-small + .card__subtitle {
   padding-top: $spacing-vertical * 1/3;
 }
 
-.card__meta {
-  color: var(--color-help);
-  font-size: 14px;
-  font-family: 'metropolis-medium';
-  padding-top: $spacing-vertical * 2/3;
-}
 
-.card__file-properties {
-  display: flex;
-  align-items: center;
-  padding-top: $spacing-vertical * 1/3;
-  color: var(--card-text-color);
-
-  .icon + .icon,
-  .credit-amount + .icon {
-    margin-left: $spacing-vertical * 1/3;
-  }
-}
-
-// .card-media__internal__links should always be inside a card
-.card {
-  .card-media__internal-links {
-    position: absolute;
-    top: $spacing-vertical * 2/3;
-    right: $spacing-vertical * 2/3;
-  }
-}
-
-.card--small {
-  .card-media__internal-links {
-    top: $spacing-vertical * 1/3;
-    right: $spacing-vertical * 1/3;
-  }
-}
 
 // Channel info with buttons on the right side
 .card__channel-info {
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: $spacing-width 0 0;
 }
 
 .card__channel-info--large {
-  padding-top: 0;
   padding-bottom: $spacing-vertical * 2/3;
+  padding-top: 0;
 }
+
+
 
 .card__content {
   margin-top: $spacing-vertical * 2/3;
@@ -228,6 +345,15 @@
 
 .card__content--extra-padding {
   margin-top: $spacing-vertical * 3/2;
+}
+
+
+
+.card__subtext {
+  font-size: calc(var(--font-size-subtext-multiple) * 1em);
+  font-weight: 700;
+  padding-top: $spacing-vertical * 1/3;
+  word-break: break-word;
 }
 
 .card__subtext-title {
@@ -239,13 +365,6 @@
   }
 }
 
-.card__subtext {
-  font-size: calc(var(--font-size-subtext-multiple) * 1em);
-  padding-top: $spacing-vertical * 1/3;
-  word-break: break-word;
-  font-family: 'metropolis-medium';
-}
-
 .card__subtext--small {
   font-size: calc(var(--font-size-subtext-multiple) * 0.8em);
 }
@@ -254,9 +373,11 @@
   font-size: calc(var(--font-size-subtext-multiple) * 0.9em);
 }
 
+
+
 .card__actions {
-  margin-top: $spacing-vertical * 2/3;
   display: flex;
+  margin-top: $spacing-vertical * 2/3;
 
   &:not(.card__actions--vertical) {
     .btn:nth-child(n + 2),
@@ -267,18 +388,23 @@
   }
 }
 
-.card__actions--no-margin {
-  margin-top: 0;
+
+
+.card__actions-bottom-corner {
+  bottom: $spacing-vertical; right: $spacing-vertical;
+  position: absolute;
 }
 
-.card__actions--vertical {
-  flex-direction: column;
-  margin-top: 0;
-  align-items: flex-end;
+.card__actions-top-corner {
+  top: $spacing-vertical; right: $spacing-vertical;
+  position: absolute;
+}
 
-  .btn:not(:first-child) {
-    margin-top: $spacing-vertical * 1/3;
-  }
+
+
+.card__actions--between {
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .card__actions--center {
@@ -290,118 +416,42 @@
   }
 }
 
-.card__actions-top-corner {
-  position: absolute;
-  top: $spacing-vertical;
-  right: $spacing-vertical;
-}
-
-.card__actions-bottom-corner {
-  position: absolute;
-  bottom: $spacing-vertical;
-  right: $spacing-vertical;
-}
-
 .card__actions--end {
   justify-content: flex-end;
 }
 
-.card__actions--between {
-  justify-content: space-between;
-  flex-wrap: wrap;
+.card__actions--no-margin {
+  margin-top: 0;
 }
 
-/*
- .card-row is used on the discover page
- It is a list of cards that extend past the right edge of the screen
- There are left/right arrows to scroll the cards and view hidden content
-*/
-.card-row {
-  white-space: nowrap;
-  width: 100%;
-  padding-top: $spacing-vertical;
+.card__actions--vertical {
+  align-items: flex-end;
+  flex-direction: column;
+  margin-top: 0;
 
-  &:last-of-type {
-    padding-bottom: $spacing-vertical * 2/3;
+  .btn:not(:first-child) {
+    margin-top: $spacing-vertical * 1/3;
   }
 }
 
-.card-row__header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  // specific padding-left styling is needed here
-  // this needs to be used on a page with noPadding
-  // doing so allows the content to scroll to the edge of the screen
-  padding-left: $spacing-width;
-}
 
-.card-row__title {
-  display: flex;
-  align-items: center;
-  font-size: 18px;
-  line-height: 24px;
-
-  @media only screen and (min-width: $medium-breakpoint) {
-    font-size: 20px;
-  }
-}
-
-.card-row__scroll-btns {
-  display: flex;
-  padding-right: $spacing-width * 1/3;
-
-  @media (min-width: $medium-breakpoint) {
-    padding-right: $spacing-width;
-  }
-}
-
-.card-row__scrollhouse {
-  padding-top: $spacing-vertical * 2/3;
-  overflow: hidden;
-
-  .card {
-    display: inline-block;
-    vertical-align: top;
-    overflow-y: visible;
-    // 31 px to handle to padding between cards
-    width: calc((100% / 4) - 34px);
-
-    @media only screen and (min-width: $medium-breakpoint) {
-      width: calc((100% / 6) - 29px);
-    }
-
-    @media only screen and (min-width: $large-breakpoint) {
-      width: calc((100% / 8) - 27px);
-    }
-  }
-
-  .card:not(:first-of-type) {
-    margin-left: 20px;
-  }
-
-  .card:first-of-type {
-    margin-left: $spacing-width;
-  }
-
-  .card:last-of-type {
-    margin-right: $spacing-width;
-  }
-}
 
 .card-row__message {
   padding: 0 $spacing-width;
   white-space: normal;
 }
 
+
+
 /*
   How cards are displayed in lists
 */
+
 .card__list {
   .card {
     display: inline-block;
-    vertical-align: top;
     margin-bottom: $spacing-vertical * 3/2;
+    vertical-align: top;
 
     @media only screen and (max-width: $medium-breakpoint) {
       width: calc((100% / 4) - (60px / 4)); // 60px === 20px margin-right * three cards
@@ -429,12 +479,21 @@
   }
 }
 
+.card__list--recommended {
+  flex: 0 0 var(--recommended-content-width);
+  padding-left: $spacing-width;
+
+  @media (min-width: $medium-breakpoint) {
+    // flex: 0 0 var(--recommended-content-width-medium);
+  }
+}
+
 .card__list--rewards {
   .card {
     display: inline-block;
-    width: calc(50% - 10px);
     margin-bottom: 20px;
     vertical-align: top;
+    width: calc(50% - 10px);
 
     &:not(:nth-child(2n + 1)) {
       margin-left: 20px;
@@ -442,14 +501,7 @@
   }
 }
 
-.card__list--recommended {
-  flex: 0 0 var(--recommended-content-width);
-  padding-left: $spacing-width;
 
-  @media (min-width: $medium-breakpoint) {
-    flex: 0 0 var(--recommended-content-width-medium);
-  }
-}
 
 .card__success-msg {
   border-left: 2px solid var(--success-msg-border);
@@ -459,42 +511,54 @@
   margin: $spacing-vertical * 1/3 0;
 }
 
+
+
 .card__media--autothumb {
-  color: red !important;
+  color: red !important; // TODO: Why not variable color?
 }
 
 .card__media {
   &.card__media--autothumb.purple {
-    background-color: #9c27b0;
+    background-color: #9c27b0; // TODO: Why not variable color?
   }
+
   &.card__media--autothumb.red {
-    background-color: #e53935;
+    background-color: #e53935; // TODO: Why not variable color?
   }
+
   &.card__media--autothumb.pink {
-    background-color: #e91e63;
+    background-color: #e91e63; // TODO: Why not variable color?
   }
+
   &.card__media--autothumb.indigo {
-    background-color: #3f51b5;
+    background-color: #3f51b5; // TODO: Why not variable color?
   }
+
   &.card__media--autothumb.blue {
-    background-color: #2196f3;
+    background-color: #2196f3; // TODO: Why not variable color?
   }
+
   &.card__media--autothumb.light-blue {
-    background-color: #039be5;
+    background-color: #039be5; // TODO: Why not variable color?
   }
+
   &.card__media--autothumb.cyan {
-    background-color: #00acc1;
+    background-color: #00acc1; // TODO: Why not variable color?
   }
+
   &.card__media--autothumb.teal {
-    background-color: #009688;
+    background-color: #009688; // TODO: Why not variable color?
   }
+
   &.card__media--autothumb.green {
-    background-color: #43a047;
+    background-color: #43a047; // TODO: Why not variable color?
   }
+
   &.card__media--autothumb.yellow {
-    background-color: #ffeb3b;
+    background-color: #ffeb3b; // TODO: Why not variable color?
   }
+
   &.card__media--autothumb.orange {
-    background-color: #ffa726;
+    background-color: #ffa726; // TODO: Why not variable color?
   }
 }

@@ -67,6 +67,33 @@ class FileCard extends React.PureComponent<Props> {
       return null;
     }
 
+    const IconBadge = props => {
+      const color = props.color || '#111';
+
+      return (
+        <svg height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+          <g
+            fill="none"
+            fillRule="evenodd"
+            stroke="none"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="8" stroke={color} />
+            <path
+              d="M9.856, 4L6.144, 6.144L4, 9.856L4, 14.144L6.144, 17.856L9.856, 20L14.144, 20L17.856, 17.856L20, 14.144L20, 9.856L17.856, 6.144L14.144, 4L9.856, 4ZM9.675, 3.325L12, 1L14.325, 3.325L17.5, 2.474L18.351, 5.649L21.526, 6.5L20.675, 9.675L23, 12L20.675, 14.325L21.526, 17.5L18.351, 18.351L17.5, 21.526L14.325, 20.675L12, 23L9.675, 20.675L6.5, 21.526L5.649, 18.351L2.474, 17.5L3.325, 14.325L1, 12L3.325, 9.675L2.474, 6.5L5.649, 5.649L6.5, 2.474L9.675, 3.325Z"
+              fill={color}
+            />
+            <path
+              d="M12, 13.988L9.649, 15.236L10.109, 12.614L8.196, 10.764L10.832, 10.392L12, 8L13.168, 10.392L15.804, 10.764L13.891, 12.614L14.351, 15.236L12, 13.988Z"
+              fill={color}
+            />
+          </g>
+        </svg>
+      );
+    };
+
     const uri = !pending ? normalizeURI(this.props.uri) : this.props.uri;
     const title = metadata && metadata.title ? metadata.title : uri;
     const thumbnail = metadata && metadata.thumbnail ? metadata.thumbnail : null;
@@ -80,31 +107,31 @@ class FileCard extends React.PureComponent<Props> {
     // We should be able to tab through cards
     /* eslint-disable jsx-a11y/click-events-have-key-events */
     return (
-      <section
-        tabIndex="0"
-        role="button"
-        onClick={!pending ? () => navigate('/show', { uri }) : () => {}}
-        className={classnames('card card--small', {
-          'card--link': !pending,
-          'card--pending': pending,
+      <li
+        className={classnames('card small', {
+          'link': !pending,
+          'pending': pending,
         })}
+        onClick={!pending ? () => navigate('/show', { uri }) : () => {}}
         onContextMenu={handleContextMenu}
+        role="button"
+        tabIndex="0"
       >
         <CardMedia thumbnail={thumbnail} />
-        <div className="card__title-identity">
-          <div className="card__title--small card__title--file-card">
+        <div className="card__meta identity">
+          <div className="card__meta__title small file-card">
             <TruncatedText lines={2}>{title}</TruncatedText>
           </div>
-          <div className="card__subtitle">
+          <div className="card__meta__subtitle">
             {pending ? <div>Pending...</div> : <UriIndicator uri={uri} link />}
           </div>
-          <div className="card__file-properties">
+          <div className="card__meta__properties">
             {showPrice && <FilePrice hideFree uri={uri} />}
-            {isRewardContent && <Icon iconColor="red" icon={icons.FEATURED} />}
+            {isRewardContent && <IconBadge color="#d22727" />}
             {fileInfo && <Icon icon={icons.LOCAL} />}
           </div>
         </div>
-      </section>
+      </li>
     );
     /* eslint-enable jsx-a11y/click-events-have-key-events */
   }
