@@ -16,10 +16,10 @@ const Spinner = (props: Props) => {
   return (
     <div
       className={classnames('spinner', {
-        'spinner--dark': !light && (dark || theme === LIGHT_THEME),
-        'spinner--light': !dark && (light || theme === DARK_THEME),
-        'spinner--splash': type === 'splash',
-        'spinner--small': type === 'small',
+        'dark': !light && (dark || theme === LIGHT_THEME),
+        'light': !dark && (light || theme === DARK_THEME),
+        'small': type === 'small',
+        'splash': type === 'splash',
       })}
     >
       <div className="rect rect1" />
