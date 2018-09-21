@@ -14,9 +14,10 @@
     width: 100%;
 
     &:first-of-type {
+      margin-bottom: 1rem; padding-bottom: $spacing-vertical;
+
       background-color: $black;
       color: $white;
-      padding-bottom: $spacing-vertical;
 
       .card-row__header {
         font-weight: 700;
@@ -48,8 +49,9 @@
   align-items: center;
   cursor: default;
   display: flex;
-  font-size: 18px;
-  line-height: 24px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
 
   @media only screen and (min-width: $medium-breakpoint) {
     // font-size: 20px;
@@ -58,16 +60,20 @@
 
 .cards__header__navigation {
   display: flex;
-  padding-right: 1rem; // $spacing-width * 1/3;
+  padding-right: $spacing-width * 1/3; // $spacing-width * 1/3;
 
   @media (min-width: $medium-breakpoint) {
     // padding-right: $spacing-width;
   }
 
+  svg {
+    display: block;
+  }
+
   .left,
   .right {
-    color: var(--text-color);
-    width: var(--btn-arrow-width);
+    // color: var(--text-color);
+    // width: var(--btn-arrow-width);
 
     &:disabled {
       opacity: 0.3;
@@ -85,10 +91,10 @@
     display: inline-block;
     overflow-y: visible;
     vertical-align: top;
-    width: calc((100% / 4) - 34px); // 31 px to handle to padding between cards
+    width: calc((100% / 4) - 2.25rem); // 2.25rem is $spacing-width but variables do not work here...weird
 
     &:not(:first-of-type) {
-      margin-left: 20px;
+      margin-left: 1.25rem;
     }
 
     &:first-of-type {
@@ -137,7 +143,7 @@
     white-space: normal;
 
     .card__media {
-      padding-top: var(--video-aspect-ratio);
+      margin-bottom: $spacing-vertical * 2/3; padding-top: var(--video-aspect-ratio);
     }
 
     .card-media__internal-links {
@@ -152,6 +158,27 @@
       margin-top: calc(var(--video-aspect-ratio) * -1);
     }
 
+    .card__meta {
+      font-size: 0.9rem;
+    }
+
+    .card__meta__properties {
+      > *:not(:last-child) {
+        margin-right: $spacing-vertical * 1/3;
+      }
+    }
+
+    .card__meta__subtitle {
+      font-weight: 400;
+      margin-bottom: $spacing-vertical;
+    }
+
+    .card__meta__title {
+      height: 2.5rem;
+      line-height: 1.26;
+    }
+
+    /*
     .channel-name {
       font-size: 12px;
 
@@ -159,6 +186,7 @@
         // font-size: 14px;
       }
     }
+    */
   }
 
   // .card-media__internal__links should always be inside a card
@@ -174,8 +202,8 @@
   // color: var(--text-color); // var(--color-help);
   // font-family: "metropolis-medium";
   // font-size: 14px;
-  font-size: 18px;
-  padding-top: $spacing-vertical * 2/3;
+  // font-size: 18px;
+  // padding-top: $spacing-vertical * 2/3;
 
   &.file {
     font-size: 18px;
@@ -210,19 +238,15 @@
   align-items: center;
   color: var(--card-text-color);
   display: flex;
-  padding-top: $spacing-vertical * 1/3;
-
-  > *:not(:last-child) {
-    margin-right: $spacing-vertical * 1/3;
-  }
 }
 
 .card__meta__subtitle {
   color: var(--card-text-color);
-  font-size: 14px;
+  // font-size: 14px;
   // font-family: "metropolis-medium";
   // margin: 0;
 
+  /*
   &.large {
     font-size: 18px;
     padding-bottom: $spacing-vertical * 1/3;
@@ -235,9 +259,11 @@
   &.x-small {
     font-size: 12px;
   }
+  */
 }
 
 .card__meta__title {
+  /*
   &.file-card {
     // height is the same height that two lines of title fill
     // doing this so content below the title is inline accross the row
@@ -248,14 +274,19 @@
       // height: 36px;
     }
   }
+  */
 
+  /*
   &.large {
     font-size: 22px;
   }
 
   &.small {
-    font-size: 12px;
-    line-height: 12px;
+    font-size: 0.8rem;
+    line-height: 1.33;
+    margin-bottom: 0.5rem;
+    // font-size: 12px;
+    // line-height: 12px;
 
     @media only screen and (min-width: $medium-breakpoint) {
       // font-size: 14px;
@@ -267,6 +298,7 @@
     font-size: 12px;
     line-height: 12px;
   }
+  */
 }
 
 
@@ -435,10 +467,27 @@
 }
 
 
-
-.card-row__message {
-  padding: 0 $spacing-width;
+.cards__message {
+  cursor: default;
+  font-size: 0.9rem;
+  padding: 1rem $spacing-width;
   white-space: normal;
+
+  button {
+    color: $teal;
+    cursor: pointer;
+  }
+
+  &.help {
+  }
+
+  &.success {
+    margin: $spacing-vertical * 1/3 0; padding: $spacing-vertical * 1/3;
+
+    background-color: var(--success-msg-bg);
+    border-left: 2px solid var(--success-msg-border);
+    color: var(--success-msg-color);
+  }
 }
 
 
@@ -502,7 +551,7 @@
 }
 
 
-
+/*
 .card__success-msg {
   border-left: 2px solid var(--success-msg-border);
   color: var(--success-msg-color);
@@ -510,55 +559,56 @@
   padding: $spacing-vertical * 1/3;
   margin: $spacing-vertical * 1/3 0;
 }
+*/
 
 
-
-.card__media--autothumb {
-  color: red !important; // TODO: Why not variable color?
-}
 
 .card__media {
-  &.card__media--autothumb.purple {
-    background-color: #9c27b0; // TODO: Why not variable color?
-  }
+  &.autothumb {
+    color: $red; // !important;
 
-  &.card__media--autothumb.red {
-    background-color: #e53935; // TODO: Why not variable color?
-  }
+    &.purple {
+      background-color: #9c27b0;
+    }
 
-  &.card__media--autothumb.pink {
-    background-color: #e91e63; // TODO: Why not variable color?
-  }
+    &.red {
+      background-color: #e53935;
+    }
 
-  &.card__media--autothumb.indigo {
-    background-color: #3f51b5; // TODO: Why not variable color?
-  }
+    &.pink {
+      background-color: #e91e63;
+    }
 
-  &.card__media--autothumb.blue {
-    background-color: #2196f3; // TODO: Why not variable color?
-  }
+    &.indigo {
+      background-color: #3f51b5;
+    }
 
-  &.card__media--autothumb.light-blue {
-    background-color: #039be5; // TODO: Why not variable color?
-  }
+    &.blue {
+      background-color: #2196f3;
+    }
 
-  &.card__media--autothumb.cyan {
-    background-color: #00acc1; // TODO: Why not variable color?
-  }
+    &.light-blue {
+      background-color: #039be5;
+    }
 
-  &.card__media--autothumb.teal {
-    background-color: #009688; // TODO: Why not variable color?
-  }
+    &.cyan {
+      background-color: #00acc1;
+    }
 
-  &.card__media--autothumb.green {
-    background-color: #43a047; // TODO: Why not variable color?
-  }
+    &.teal {
+      background-color: #009688;
+    }
 
-  &.card__media--autothumb.yellow {
-    background-color: #ffeb3b; // TODO: Why not variable color?
-  }
+    &.green {
+      background-color: #43a047;
+    }
 
-  &.card__media--autothumb.orange {
-    background-color: #ffa726; // TODO: Why not variable color?
+    &.yellow {
+      background-color: #ffeb3b;
+    }
+
+    &.orange {
+      background-color: #ffa726;
+    }
   }
 }

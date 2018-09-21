@@ -49,7 +49,7 @@ class CategoryList extends React.PureComponent<Props, State> {
 
     const cardRow = this.rowItems;
     if (cardRow) {
-      const cards = cardRow.getElementsByTagName('section');
+      const cards = cardRow.getElementsByTagName('li');
       const lastCard = cards[cards.length - 1];
       const isCompletelyVisible = this.isCardVisible(lastCard);
 
@@ -67,7 +67,7 @@ class CategoryList extends React.PureComponent<Props, State> {
   rowItems: ?HTMLDivElement;
 
   handleScroll(cardRow: HTMLDivElement, scrollTarget: number) {
-    const cards = cardRow.getElementsByTagName('section');
+    const cards = cardRow.getElementsByTagName('li');
     const animationCallback = () => {
       const firstCard = cards[0];
       const lastCard = cards[cards.length - 1];
@@ -135,7 +135,7 @@ class CategoryList extends React.PureComponent<Props, State> {
   handleScrollNext() {
     const cardRow = this.rowItems;
     if (cardRow) {
-      const cards = cardRow.getElementsByTagName('section');
+      const cards = cardRow.getElementsByTagName('li');
 
       // loop over items until we find one that is on the screen
       // continue searching until a card isn't fully visible, this is the new target
@@ -163,7 +163,7 @@ class CategoryList extends React.PureComponent<Props, State> {
   handleScrollPrevious() {
     const cardRow = this.rowItems;
     if (cardRow) {
-      const cards = cardRow.getElementsByTagName('section');
+      const cards = cardRow.getElementsByTagName('li');
 
       let hasFoundCard;
       let numberOfCardsThatCanFit = 0;
@@ -249,12 +249,12 @@ class CategoryList extends React.PureComponent<Props, State> {
           )}
         </header>
         {obscureNsfw && isCommunityTopBids ? (
-          <div className="card-row__message help">
+          <p className="cards__message help">
             {__(
               'The community top bids section is only visible if you allow mature content in the app. You can change your content viewing preferences'
             )}{' '}
             <Button button="link" navigate="/settings" label={__('here')} />.
-          </div>
+          </p>
         ) : (
           <ul
             className="cards__scrollhouse"
