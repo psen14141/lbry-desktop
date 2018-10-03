@@ -117,21 +117,21 @@ class UserHistoryPage extends React.PureComponent<Props, State> {
           />
         </div>
         {!!history.length && (
-          <table className="card--section table table--stretch table--history">
-            <tbody>
-              {history.map(item => (
-                <UserHistoryItem
-                  key={item.uri}
-                  uri={item.uri}
-                  lastViewed={item.lastViewed}
-                  selected={!!itemsSelected[item.uri]}
-                  onSelect={() => {
-                    this.onSelect(item.uri);
-                  }}
-                />
-              ))}
-            </tbody>
-          </table>
+            <table className="card--section table table--stretch table--history">
+              <tbody>
+                {history.map(item => (
+                  <UserHistoryItem
+                    key={item.uri}
+                    uri={item.uri}
+                    lastViewed={item.lastViewed}
+                    selected={!!itemsSelected[item.uri]}
+                    onSelect={() => {
+                      this.onSelect(item.uri);
+                    }}
+                    />
+                ))}
+              </tbody>
+            </table>
         )}
         {pageCount > 1 && (
           <FormRow padded verticallyCentered centered>

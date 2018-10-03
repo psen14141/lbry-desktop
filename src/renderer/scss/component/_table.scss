@@ -136,14 +136,15 @@ table.table--history {
       width: 17.5%;
     }
     td:nth-of-type(3) {
-      width: 40%;
-      max-width: 30vw;
+      width: 45%;
+      // max-width: 30vw;
       padding-right: $spacing-vertical * 2/3;
     }
     td:nth-of-type(4) {
       width: 30%;
     }
 
+    td:nth-of-type(2),
     td:nth-of-type(3),
     td:nth-of-type(4) {
       overflow: hidden;
