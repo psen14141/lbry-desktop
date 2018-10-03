@@ -7,6 +7,10 @@ export function doNavigate(path, params = {}, options = {}) {
     if (!path) {
       return;
     }
+    
+    if (path === "/show" && params.uri) {
+      params.uri = params.uri.startsWith('lbry://') ? params.uri : `lbry://${params.uri}`;
+    }
 
     let url = path;
     if (params && Object.values(params).length) {
